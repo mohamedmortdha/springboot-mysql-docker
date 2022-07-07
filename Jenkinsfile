@@ -1,20 +1,10 @@
-pipeline{
+pipeline {
     agent any
-    tools{
-        maven "maven3.8.1"
-    }
-    stages{
-        stage("build"){
-            steps{
-                sh "mvn --version"
-                sh "mvn clean install"
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
             }
-        }
-
-    }
-    post{
-        always{
-            cleanWs()
         }
     }
 }
