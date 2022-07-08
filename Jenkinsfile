@@ -1,23 +1,21 @@
-#!groovy
-
 pipeline {
-  agent none
-  stages {
-    stage('Maven Install') {
-      agent {
-        docker {
-         sh 'docker -v'
+    agent none
+    stages {
+        stage('Back-end') {
+            agent {
+                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+            }
+            steps {
+                sh 'mvn --version'
+            }
         }
-      }
-      steps {
-        sh 'mvn clean install -Dmaven.test.skip=true'
-      }
+        stage('Front-end') {
+            agent {
+                docker { image 'node:16.13.1-alpine' }
+            }
+            steps {
+                sh 'node --version'
+            }
+        }
     }
-    stage('Docker Build') {
-      agent any
-      steps {
-        sh 'docker build -t backend .'
-      }
-    }
-  }
 }
