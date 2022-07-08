@@ -1,30 +1,20 @@
 pipeline {
-  // "Top-level" agent is assigned to docker agents via Jenkins pipeline configuration
   agent none
-
   stages {
-    stage('Docker node test') {
+    stage('Maven Install') {
       agent {
         docker {
-          image 'node:7-alpine'
-          args '--name docker-node' // list any args
+         sh 'docker -v'
         }
       }
       steps {
-        // Steps run in node:7-alpine docker container on docker agent
-        sh 'node --version'
+        sh 'mvn clean install -Dmaven.test.skip=true'
       }
     }
-    
-    stage('Docker maven test') {
-      agent {
-        docker {
-          image 'maven:3-alpine'
-        }
-      }
+    stage('Docker Build') {
+      agent any
       steps {
-        // Steps run in maven:3-alpine docker container on docker agent
-        sh 'mvn --version'
+        sh 'docker build -t backend .'
       }
     }
   }
