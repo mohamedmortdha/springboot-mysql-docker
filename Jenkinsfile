@@ -18,5 +18,11 @@ pipeline {
         sh 'docker build -t backend .'
       }
     }
+    stage('Docker deployer') {
+          agent any
+          steps {
+            sh 'docker-compose up -d'
+          }
+        }
   }
 }
