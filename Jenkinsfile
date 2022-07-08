@@ -6,8 +6,7 @@ pipeline {
     stage('Maven Install') {
       agent {
         docker {
-          image 'adoptopenjdk/maven-openjdk11:latest'
-          reuseNode true
+         sh 'docker -v'
         }
       }
       steps {
