@@ -1,10 +1,11 @@
+#!groovy
 pipeline {
   agent none
   stages {
     stage('Maven Install') {
       agent {
         docker {
-         sh 'docker -v'
+          image 'adoptopenjdk/maven-openjdk11:latest'
         }
       }
       steps {
