@@ -1,21 +1,23 @@
+
 pipeline {
-    agent none
-    stages {
-        stage('Back-end') {
-            agent {
-                docker { image 'maven:3.8.1-adoptopenjdk-11' }
-            }
-            steps {
-                sh 'mvn --version'
-            }
+  // Assign to docker agent(s) label, could also be 'any'
+  agent {
+    label 'docker' 
+  }
+
+  stages {
+    stage('Docker maven test') {
+      agent {
+        docker {
+          // Set both label and image
+          label 'docker'
+          image 'maven:3-alpine'
         }
-        stage('Front-end') {
-            agent {
-                docker { image 'node:16.13.1-alpine' }
-            }
-            steps {
-                sh 'node --version'
-            }
-        }
+      }
+      steps {
+        // Steps run in maven:3-alpine docker container on docker agent
+        sh 'mvn --version'
+      }
     }
-}
+  }
+} 
