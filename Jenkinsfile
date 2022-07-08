@@ -7,6 +7,7 @@ pipeline {
       agent {
         docker {
           image 'adoptopenjdk/maven-openjdk11:latest'
+          reuseNode true
         }
       }
       steps {
