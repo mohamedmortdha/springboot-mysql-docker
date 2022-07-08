@@ -18,12 +18,7 @@ pipeline {
         sh 'docker build -t backend .'
       }
     }
-    stage('Docker create nework') {
-      agent any
-      steps {
-        sh 'docker network create springmysql-net'
-      }
-    }
+
     stage('Docker deployer') {
           agent any
           steps {
